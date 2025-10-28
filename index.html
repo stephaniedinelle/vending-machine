@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>💖 Steph’s Ultimate Glam Beauty Vending Machine 💖</title>
+<style>
+body {
+  font-family: "Poppins", sans-serif;
+  background: radial-gradient(circle at top left, #ffe6f9, #ffb3e6, #ff99cc, #ff80bf);
+  text-align: center;
+  color: #b30086;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+h1 {
+  margin-top: 30px;
+  font-size: 2.5rem;
+  text-shadow: 0 0 25px #ff66cc, 0 0 50px #ff99e6;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+@keyframes glow {
+  from { text-shadow: 0 0 20px #ff66cc; }
+  to { text-shadow: 0 0 40px #ff99ff, 0 0 60px #ffb3e6; }
+}
+.vending-machine {
+  background: rgba(255, 230, 249, 0.9);
+  backdrop-filter: blur(15px);
+  border-radius: 40px;
+  box-shadow: 0 0 50px rgba(255, 102, 204, 0.6), inset 0 0 40px rgba(255, 255, 255, 0.2);
+  width: 90%;
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 30px;
+}
+.items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 15px;
+}
+.item {
+  background: linear-gradient(135deg, #fff0fb, #ffe3fa);
+  border: 3px solid #ffa6e9;
+  border-radius: 20px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 5px 15px rgba(255, 200, 236, 0.5);
+}
+.item:hover, .item.selected {
+  transform: scale(1.15);
+  background: linear-gradient(135deg, #ffe3fa, #ffccff);
+  box-shadow: 0 0 25px #ff80df;
+}
+.item-emoji {
+  font-size: 30px;
+  animation: floatEmoji 3s ease-in-out infinite;
+}
+@keyframes floatEmoji {
+  0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}
+}
+.item-name { font-weight: bold; font-size: 13px; margin: 5px 0; }
+.item-price { color: #b30086; font-size: 11px; }
+
+.money-section {
+  background: rgba(255, 240, 251, 0.85);
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 25px;
+  box-shadow: inset 0 0 10px rgba(255, 166, 233, 0.3);
+}
+.money-input {
+  padding: 8px;
+  border-radius: 10px;
+  border: 2px solid #ff80d9;
+  text-align: center;
+  width: 100px;
+}
+.insert-btn, .coin-btn, .push-btn {
+  background: linear-gradient(90deg, #ff66cc, #ff33aa);
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 15px #ff80df;
+}
+.insert-btn:hover, .coin-btn:hover, .push-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px #ff4fc9;
+}
+.coin-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.push-btn {
+  margin-top: 25px;
+  padding: 15px 40px;
+  font-size: 18px;
+}
+.output {
+  margin-top: 15px;
+  font-size: 18px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 10px;
+  padding: 10px;
+  color: #b30086;
+  font-weight: bold;
+}
+.dispense-area {
+  margin-top: 20px;
+  height: 60px;
+  background: linear-gradient(135deg, #fff0fb, #ffe3fa);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  color: #b30086;
+  border: 3px dashed #ffa6e9;
+  box-shadow: inset 0 0 20px rgba(255, 166, 233, 0.5);
+}
+footer {
+  margin-top: 40px;
+  font-size: 14px;
+  color: #b30086;
+}
+.dispensing { animation: dispense 1.5s ease-in-out; }
+@keyframes dispense {
+  0%{transform:translateY(0);opacity:1;}
+  100%{transform:translateY(40px);opacity:0;}
+}
+</style>
+</head>
+<body>
+<h1>💋 Steph’s Ultimate Glam Beauty Vending Machine 💄</h1>
+
+<div class="vending-machine">
+  <div class="items">
+    <!-- 40+ Items -->
+    <div class="item" data-name="Velvet Lipstick" data-price="150"><div class="item-emoji">💄</div><div class="item-name">Velvet Lipstick</div><div class="item-price">NT$150</div></div>
+    <div class="item" data-name="Shimmer Gloss" data-price="120"><div class="item-emoji">💋</div><div class="item-name">Shimmer Gloss</div><div class="item-price">NT$120</div></div>
+    <div class="item" data-name="Rainbow Nail Polish" data-price="100"><div class="item-emoji">💅</div><div class="item-name">Rainbow Nail Polish</div><div class="item-price">NT$100</div></div>
+    <div class="item" data-name="Designer Purse" data-price="250"><div class="item-emoji">👛</div><div class="item-name">Designer Purse</div><div class="item-price">NT$250</div></div>
+    <div class="item" data-name="Perfume" data-price="180"><div class="item-emoji">🌸</div><div class="item-name">Floral Perfume</div><div class="item-price">NT$180</div></div>
+    <div class="item" data-name="Compact Mirror" data-price="80"><div class="item-emoji">🪞</div><div class="item-name">Compact Mirror</div><div class="item-price">NT$80</div></div>
+    <div class="item" data-name="Necklace" data-price="200"><div class="item-emoji">💖</div><div class="item-name">Heart Necklace</div><div class="item-price">NT$200</div></div>
+    <div class="item" data-name="Earrings" data-price="160"><div class="item-emoji">🩷</div><div class="item-name">Pink Earrings</div><div class="item-price">NT$160</div></div>
+    <div class="item" data-name="Mascara" data-price="130"><div class="item-emoji">👁️</div><div class="item-name">Mascara</div><div class="item-price">NT$130</div></div>
+    <div class="item" data-name="Blush Palette" data-price="140"><div class="item-emoji">🌸</div><div class="item-name">Blush Palette</div><div class="item-price">NT$140</div></div>
+    <div class="item" data-name="Eyeshadow Kit" data-price="170"><div class="item-emoji">👀</div><div class="item-name">Eyeshadow Kit</div><div class="item-price">NT$170</div></div>
+    <div class="item" data-name="Body Lotion" data-price="95"><div class="item-emoji">🧴</div><div class="item-name">Body Lotion</div><div class="item-price">NT$95</div></div>
+    <div class="item" data-name="Diamond Ring" data-price="300"><div class="item-emoji">💍</div><div class="item-name">Diamond Ring</div><div class="item-price">NT$300</div></div>
+    <div class="item" data-name="Hair Clips" data-price="70"><div class="item-emoji">🎀</div><div class="item-name">Hair Clips Set</div><div class="item-price">NT$70</div></div>
+    <div class="item" data-name="Face Cream" data-price="160"><div class="item-emoji">🧴</div><div class="item-name">Face Cream</div><div class="item-price">NT$160</div></div>
+    <div class="item" data-name="Scented Candle" data-price="190"><div class="item-emoji">🕯️</div><div class="item-name">Scented Candle</div><div class="item-price">NT$190</div></div>
+    <div class="item" data-name="Silk Scarf" data-price="220"><div class="item-emoji">🧣</div><div class="item-name">Silk Scarf</div><div class="item-price">NT$220</div></div>
+    <div class="item" data-name="Hair Brush" data-price="90"><div class="item-emoji">💆‍♀️</div><div class="item-name">Hair Brush</div><div class="item-price">NT$90</div></div>
+    <div class="item" data-name="Makeup Bag" data-price="150"><div class="item-emoji">👜</div><div class="item-name">Makeup Bag</div><div class="item-price">NT$150</div></div>
+    <div class="item" data-name="Luxury Bracelet" data-price="240"><div class="item-emoji">💫</div><div class="item-name">Luxury Bracelet</div><div class="item-price">NT$240</div></div>
+  </div>
+
+  <div class="money-section">
+    <label for="money-input">Insert Money (NT$):</label>
+    <input type="number" id="money-input" class="money-input" min="0" step="10" placeholder="0">
+    <button class="insert-btn" id="insert-btn">Insert</button>
+    <div class="coin-buttons">
+      <button class="coin-btn" data-amount="1">NT$1</button>
+      <button class="coin-btn" data-amount="5">NT$5</button>
+      <button class="coin-btn" data-amount="10">NT$10</button>
+      <button class="coin-btn" data-amount="20">NT$20</button>
+      <button class="coin-btn" data-amount="50">NT$50</button>
+      <button class="coin-btn" data-amount="100">NT$100</button>
+      <button class="coin-btn" data-amount="500">NT$500</button>
+      <button class="coin-btn" data-amount="1000">NT$1000</button>
+    </div>
+    <div>Inserted: <span id="inserted-amount">NT$0</span></div>
+  </div>
+
+  <button class="push-btn" id="push-btn">✨ Push to Dispense ✨</button>
+  <div class="dispense-area" id="dispense-area"></div>
+  <div class="output"></div>
+</div>
+
+<footer>💎 Powered by Steph’s Glam World 💅</footer>
+
+<script>
+const items = document.querySelectorAll('.item');
+const output = document.querySelector('.output');
+const pushBtn = document.querySelector('#push-btn');
+const dispenseArea = document.querySelector('#dispense-area');
+const moneyInput = document.getElementById('money-input');
+const insertBtn = document.getElementById('insert-btn');
+const coinButtons = document.querySelectorAll('.coin-btn');
+let insertedAmount = 0;
+let selectedItem = null;
+
+// Select items
+items.forEach(item => {
+  item.addEventListener('click', () => {
+    items.forEach(i => i.classList.remove('selected'));
+    item.classList.add('selected');
+    selectedItem = item;
+    output.textContent = `Selected: ${item.dataset.name} (NT$${item.dataset.price})`;
+  });
+});
+
+// Insert money manually
+insertBtn.addEventListener('click', () => {
+  const value = parseInt(moneyInput.value) || 0;
+  insertedAmount += value;
+  moneyInput.value = '';
+  document.getElementById('inserted-amount').textContent = `NT$${insertedAmount}`;
+});
+
+// Insert money via coin buttons
+coinButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    insertedAmount += parseInt(btn.dataset.amount);
+    document.getElementById('inserted-amount').textContent = `NT$${insertedAmount}`;
+  });
+});
+
+// Dispense product
+pushBtn.addEventListener('click', () => {
+  if (!selectedItem) {
+    output.textContent = 'Please select a product first!';
+    return;
+  }
+  const price = parseInt(selectedItem.dataset.price);
+  if (insertedAmount >= price) {
+    insertedAmount -= price;
+    document.getElementById('inserted-amount').textContent = `NT$${insertedAmount}`;
+    dispenseArea.textContent = selectedItem.dataset.name + ' 💕';
+    dispenseArea.classList.add('dispensing');
+    output.textContent = `Enjoy your ${selectedItem.dataset.name}! 💖`;
+    selectedItem.classList.remove('selected');
+    selectedItem = null;
+    setTimeout(() => {
+      dispenseArea.textContent = '';
+      dispenseArea.classList.remove('dispensing');
+    }, 1800);
+  } else {
+    output.textContent = `Not enough money! You need NT$${price - insertedAmount} more.`;
+  }
+});
+</script>
+</body>
+</html>
