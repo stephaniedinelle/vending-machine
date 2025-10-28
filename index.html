@@ -6,15 +6,114 @@
 <meta name="copyright" content="© 2025 Stephanie's Beauty Product. All rights reserved.">
 <title>💖 Steph’s Ultimate Glam Beauty Vending Machine 💖</title>
 <style>
+:root{
+  --header-height:64px; /* will be updated by JS for exact value */
+  scroll-behavior:smooth;
+  --brand-color: #b30086;
+  --accent: #ff66cc;
+}
+
+/* 調整頁面以考慮 sticky header 的捲動偏移 */
+html { scroll-padding-top: var(--header-height); }
+
 body {
   font-family: "Poppins", sans-serif;
   background: radial-gradient(circle at top left, #ffe6f9, #ffb3e6, #ff99cc, #ff80bf);
   text-align: center;
-  color: #b30086;
+  color: var(--brand-color);
   margin: 0;
   padding: 0;
   overflow-x: hidden;
 }
+
+/* 新增 header 樣式（可回應式） */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: linear-gradient(90deg,#fff5fb,#ffe6f7);
+  border-bottom: 2px solid rgba(255,160,220,0.2);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  backdrop-filter: blur(6px);
+  height: var(--header-height);
+  box-sizing: border-box;
+}
+
+/* brand */
+.header-brand { display:flex; align-items:center; gap:10px; }
+.logo { font-size:1.05rem; font-weight:800; color:var(--brand-color); }
+.tagline { font-size:0.85rem; color:var(--brand-color); opacity:0.9; }
+
+/* 導覽 */
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.header-nav a {
+  color: var(--brand-color);
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-weight:600;
+  transition: background .18s, transform .12s;
+}
+.header-nav a:focus, .header-nav a:hover {
+  background: rgba(255,102,204,0.08);
+  transform: translateY(-1px);
+  outline: none;
+}
+.header-badge {
+  background: var(--accent);
+  color:white;
+  padding:6px 10px;
+  border-radius:20px;
+  font-weight:700;
+  box-shadow:0 4px 12px rgba(255,102,204,0.15);
+  font-size:0.85rem;
+}
+
+/* 手機導覽切換按鈕（隱藏桌面） */
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 2px solid rgba(179,0,134,0.06);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--brand-color);
+}
+.nav-toggle:focus { outline: 2px solid rgba(255,102,204,0.2); }
+
+/* 小於 720px 時，轉為漢堡選單 */
+@media (max-width:720px){
+  .header-nav {
+    position: absolute;
+    right: 12px;
+    top: calc(var(--header-height) + 8px);
+    flex-direction: column;
+    background: linear-gradient(180deg,#fff,#fff0fb);
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(255,150,210,0.12);
+    padding: 10px;
+    display: none; /* 由 .open 控制 */
+    min-width: 160px;
+  }
+  .header-nav.open { display: flex; }
+  .nav-toggle { display: flex; }
+  .header-badge{ display:none; }
+}
+
+/* 保持主要內容不被 header 遮蓋：若 page anchor 被點到會自動留白 (已用 scroll-padding-top) */
+h1 { margin-top: 18px; font-size: 2.2rem; }
+
 h1 {
   margin-top: 30px;
   font-size: 2.5rem;
@@ -128,23 +227,50 @@ h1 {
   border: 3px dashed #ffa6e9;
   box-shadow: inset 0 0 20px rgba(255, 166, 233, 0.5);
 }
-footer {
-  margin-top: 40px;
+
+/* 新增 quote 樣式 */
+.quote {
+  margin-top: 12px;
   font-size: 14px;
-  color: #b30086;
-}
-.dispensing { animation: dispense 1.5s ease-in-out; }
-@keyframes dispense {
-  0%{transform:translateY(0);opacity:1;}
-  100%{transform:translateY(40px);opacity:0;}
+  color: #a0006e;
+  opacity: 0.95;
+  font-style: italic;
+  background: rgba(255, 240, 250, 0.6);
+  padding: 8px 14px;
+  border-radius: 12px;
+  display: inline-block;
+  box-shadow: 0 6px 12px rgba(255, 150, 210, 0.12);
 }
 </style>
 </head>
 <body>
+<!-- 新增 header + 可切換導覽按鈕（mobile friendly） -->
+<header>
+  <div class="header-brand">
+    <div class="logo">💖 Stephanie's Beauty</div>
+    <div class="tagline">Ultimate Glam Vending</div>
+  </div>
+
+  <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">
+    <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="20" height="2" rx="1" fill="currentColor"></rect>
+      <rect y="6" width="14" height="2" rx="1" fill="currentColor"></rect>
+      <rect y="12" width="8" height="2" rx="1" fill="currentColor"></rect>
+    </svg>
+  </button>
+
+  <nav class="header-nav" id="header-nav" role="navigation" aria-label="Main">
+    <a href="#items">Products</a>
+    <a href="#money">Insert</a>
+    <a href="#dispense-area">Dispense</a>
+    <a href="#footer" class="header-badge" aria-hidden="true">© 2025 Stephanie's Beauty Product</a>
+  </nav>
+</header>
+
 <h1>💋 Steph’s Ultimate Glam Beauty Vending Machine 💄</h1>
 
 <div class="vending-machine">
-  <div class="items">
+  <div class="items" id="items">
     <!-- 40+ Items -->
     <div class="item" data-name="Velvet Lipstick" data-price="150"><div class="item-emoji">💄</div><div class="item-name">Velvet Lipstick</div><div class="item-price">NT$150</div></div>
     <div class="item" data-name="Shimmer Gloss" data-price="120"><div class="item-emoji">💋</div><div class="item-name">Shimmer Gloss</div><div class="item-price">NT$120</div></div>
@@ -168,7 +294,7 @@ footer {
     <div class="item" data-name="Luxury Bracelet" data-price="240"><div class="item-emoji">💫</div><div class="item-name">Luxury Bracelet</div><div class="item-price">NT$240</div></div>
   </div>
 
-  <div class="money-section">
+  <div class="money-section" id="money">
     <label for="money-input">Insert Money (NT$):</label>
     <input type="number" id="money-input" class="money-input" min="0" step="10" placeholder="0">
     <button class="insert-btn" id="insert-btn">Insert</button>
@@ -190,7 +316,7 @@ footer {
   <div class="output"></div>
 </div>
 
-<footer>💎 Powered by Steph’s Glam World 💅 <small style="display:block;margin-top:6px;font-size:0.9rem;">© 2025 Stephanie's Beauty Product. All rights reserved.</small></footer>
+<footer id="footer">💎 Powered by Steph’s Glam World 甘斯蒂 💅 <small style="display:block;margin-top:6px;font-size:0.9rem;">© 2025 Stephanie's Beauty Product. All rights reserved.</small></footer>
 
 <script>
 const items = document.querySelectorAll('.item');
@@ -252,6 +378,46 @@ pushBtn.addEventListener('click', () => {
     output.textContent = `Not enough money! You need NT$${price - insertedAmount} more.`;
   }
 });
+
+// 新增：header toggle 與 header 高度同步到 CSS 變數，避免 anchor 被 sticky header 遮蓋
+(function(){
+  const navToggle = document.getElementById('nav-toggle');
+  const headerNav = document.getElementById('header-nav');
+  const headerEl = document.querySelector('header');
+
+  function updateHeaderHeight(){
+    if(!headerEl) return;
+    const h = headerEl.getBoundingClientRect().height;
+    document.documentElement.style.setProperty('--header-height', `${Math.ceil(h)}px`);
+    // 同步 html scroll-padding-top（有些瀏覽器需要這樣）
+    document.documentElement.style.scrollPaddingTop = `${Math.ceil(h)}px`;
+  }
+
+  // toggle nav open/close (mobile)
+  if(navToggle && headerNav){
+    navToggle.addEventListener('click', () => {
+      const open = headerNav.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    // 關閉 nav 當點選項目（行動裝置）
+    headerNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        if(headerNav.classList.contains('open')){
+          headerNav.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  }
+
+  // 更新高度在載入與調整大小時
+  window.addEventListener('load', updateHeaderHeight);
+  window.addEventListener('resize', updateHeaderHeight);
+  // 若 header 內容改變也嘗試更新
+  if(headerEl){
+    new MutationObserver(updateHeaderHeight).observe(headerEl, {childList:true, subtree:true});
+  }
+})();
 </script>
 </body>
 </html>
